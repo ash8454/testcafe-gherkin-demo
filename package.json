@@ -1,0 +1,25 @@
+{
+  "name": "gherkin-testcafe-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d build",
+    "datatable-example": "node runner.js .src/features/step_definitions/datatable.js ./features/datatable.feature",
+    "test": "gherkin-testcafe chrome ./src/steps/*.js ./src/features/*.feature",
+    "testcafe-example": "node index.js testcafe chrome .src/features/step_definitions/datatable.js ./src/features/datatable.feature"
+  },
+  "author": "ashok tulachan",
+  "license": "ISC",
+  "dependencies": {
+    "cucumber": "^6.0.5",
+    "gherkin": "^9.0.0",
+    "gherkin-testcafe": "^2.4.2",
+    "npm": "^6.13.4",
+    "testcafe": "^1.7.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
