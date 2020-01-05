@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src -d build",
     "datatable-example": "node runner.js .src/features/step_definitions/datatable.js ./features/datatable.feature",
-    "test": "gherkin-testcafe chrome ./src/steps/*.js ./src/features/*.feature",
+    "test": "gherkin-testcafe chrome:headless ./src/steps/*.js ./src/features/*.feature",
     "testcafe-example": "node index.js testcafe chrome .src/features/step_definitions/datatable.js ./src/features/datatable.feature"
   },
   "author": "ashok tulachan",
