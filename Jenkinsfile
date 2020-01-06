@@ -1,3 +1,16 @@
+// node('dockerslaves'){
+//     stage 'Checkout'
+//      sh 'whoami'
+//      checkout scm
+//      sh 'git config http.sslverify false'
+//     stage 'Prepare containers'
+//      docker.image("node:8.11-stretch").pull()
+//     stage 'Build'
+//      sh 'docker build -t automated-tests .'
+//     stage 'Test'
+//       sh 'docker run automated-tests'    
+// }
+
 #!/usr/bin/env groovy
 node {
     BROWSER_DOCKER_PATH = 'Dockerfile'
@@ -14,67 +27,40 @@ pipeline {
     }
 
     stages {
-        stage('Build and run e2e tests ') {
-            parallel {
-                stage('Test in Chrome') {
-                    agent {
-                        dockerfile {
-                            filename "${BROWSER_DOCKER_PATH}"
-                        }
-                    }
-                    steps {
-                        script {
-                            checkout scm
-                            def rootDir = pwd()
-                            def flow = load "${rootDir}${SHARED_LIBRARY_PATH}"
-                            flow.build()
-                            flow.test('Chrome')
-                        }
-                    }
-                }
-                // stage('Test in Firefox') {
-                //     agent {
-                //         dockerfile {
-                //             filename "${BROWSER_DOCKER_PATH}"
-                //         }
-                //     }
-                //     steps {
-                //         script {
-                //             checkout scm
-                //             def rootDir = pwd()
-                //             def flow = load "${rootDir}${SHARED_LIBRARY_PATH}"
-                //             flow.build()
-                //             flow.test('Firefox')
-                //         }
-                //     }
-                // }
-            }
+        stage 'Prepare containers'{
+            docker.image("node:8.11-stretch").pull()
         }
-        stage('Publish reports') {
-            agent {
-                node {
-                    label 'master'
-                }
-            }
-            steps {
-                script {
-                    checkout scm
-                    def rootDir = pwd()
-                    def flow = load "${rootDir}${SHARED_LIBRARY_PATH}"
-                    flow.publishReports()
-                    flow.checkTests()
-                }
-            }
+        stage 'Build' {
+            sh 'docker build -t automated-tests .'
         }
+        stage 'Test' {
+            sh 'docker run automated-tests'    
+        }
+        // stage('Publish reports') {
+        //     agent {
+        //         node {
+        //             label 'master'
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             checkout scm
+        //             def rootDir = pwd()
+        //             def flow = load "${rootDir}${SHARED_LIBRARY_PATH}"
+        //             flow.publishReports()
+        //             flow.checkTests()
+        //         }
+        //     }
+        // }
     }
-    post {
-        failure {
-            script {
-                checkout scm
-                def rootDir = pwd()
-                def flow = load "${rootDir}${SHARED_LIBRARY_PATH}"
-                flow.checkForFailure()
-            }
-        }
-    }
+    // post {
+    //     failure {
+    //         script {
+    //             checkout scm
+    //             def rootDir = pwd()
+    //             def flow = load "${rootDir}${SHARED_LIBRARY_PATH}"
+    //             flow.checkForFailure()
+    //         }
+    //     }
+    // }
 }
