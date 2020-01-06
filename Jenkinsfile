@@ -1,4 +1,6 @@
-pipeline {
+
+node {
+    pipeline {
     agent {
         docker { image 'node:7-alpine' }
     }
@@ -8,5 +10,6 @@ pipeline {
                 sh 'node --version'
             }
         }
+    }
     }
 }
