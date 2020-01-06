@@ -1,9 +1,9 @@
 pipeline {
-    agent { docker 'alpine' }
+    agent { dockerfile true }
     stages {
         stage('Test') {
             steps {
-                sh('printenv')
+                sh 'node --version'
             }
         }
     }
