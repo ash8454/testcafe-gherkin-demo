@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src -d build",
     "datatable-example": "node runner.js .src/features/step_definitions/datatable.js ./features/datatable.feature",
-    "test": "gherkin-testcafe chrome:headless ./src/steps/*.js ./src/features/*.feature",
+    "report": "node reports/report-generator.js",
+    "test": "gherkin-testcafe chrome:headless ./src/steps/*.js ./src/features/*.feature --reporter cucumber-json:reports/report.json --reporter-app-name='TestCafe Reports' --reporter-app-version='1.0.0'",
     "testcafe-example": "node index.js testcafe chrome .src/features/step_definitions/datatable.js ./src/features/datatable.feature"
   },
   "author": "ashok tulachan",
@@ -15,8 +16,10 @@
     "cucumber": "^6.0.5",
     "gherkin": "^9.0.0",
     "gherkin-testcafe": "^2.4.2",
+    "multiple-cucumber-html-reporter": "^1.13.2",
     "npm": "^6.13.4",
-    "testcafe": "^1.7.1"
+    "testcafe": "^1.7.1",
+    "testcafe-reporter-cucumber-json": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

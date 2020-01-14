@@ -15,7 +15,12 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
-RUN npm install
+RUN npm install \
+&& npm install -g testcafe \
+&& npm install -g gherkin-testcafe \
+&& npm install -g testcafe-reporter-cucumber-json@latest \
+&& npm install -g multiple-cucumber-html-reporter@latest \
+&& npm install -g testcafe-reporter-html@latest
 # If you are building your code for production
 # RUN npm install --only=production
 # Bundle app source

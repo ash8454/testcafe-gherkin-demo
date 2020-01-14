@@ -1,0 +1,20 @@
+[
+    {
+        "request": {
+            "name": "John Heart",
+            "comment": "I love TestCafe!",
+            "resultText": "Thank you, John Heart!"
+        },
+        "response": {
+            "name": "John Heart",
+            "comment": "I love TestCafe!",
+            "resultText": "Thank you, John Heart!"
+        }
+
+    },
+    {
+        "name": "Olivia Peyton",
+        "comment": "TestCafe is awesome!",
+        "resultText": "Thank you, Olivia Peyton!"
+    }
+]
